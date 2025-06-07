@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import LatestUpdates from './LatestUpdates';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { motion } from 'framer-motion';
 import DroneMap from './DroneMap';
 import MetricCard, { mockMetrics } from './components/MetricCard';
@@ -23,6 +24,10 @@ import thermal5 from '../assets/images/thermal-5.jpeg';
 import DroneDetails from './components/DroneDetails';
 import AnalyticsChartsPanel from './components/AnalyticsChartsPanel';
 import NavigationCard from './components/NavigationCard';
+
+import LeakLoggerCorrelationChart from './components/LeakLoggerCorrelationChart';
+import LeakByTypeChart from './components/LeakByTypeChart';
+import ConsumptionVsLeakageChart from './components/ConsumptionVsLeakageChart';
 
 const Dashboard: React.FC = () => {
   const theme = useTheme();
@@ -78,7 +83,7 @@ const Dashboard: React.FC = () => {
         transition={{ delay: 0.2, duration: 0.7 }}
         sx={{ textAlign: 'center', letterSpacing: 1 }}
       >
-        Live Dashboard
+        Dashboard
       </Typography>
       {/* Metrics Row */}
       <Grid
@@ -136,6 +141,90 @@ const Dashboard: React.FC = () => {
               thermal5,
             ]}
           />
+          {/* Additional Visualizations: Leakage Type, Consumption vs Leakage, Correlation */}
+          <Box
+            sx={{
+              bgcolor: theme.palette.background.paper,
+              borderRadius: 4,
+              boxShadow: 6,
+              mt: 4,
+              mb: 4,
+              px: { xs: 1, sm: 2 },
+              py: 3,
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              maxWidth: 'auto',
+              gap: 1,
+              mx: 'auto',
+              height: '450px',
+            }}
+          >
+            {/* <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 3 }}> */}
+            {/* Leakage by Type (Comms Pipe, Mains, etc.) */}
+            <Card
+              sx={{
+                bgcolor: theme.palette.background.default,
+                borderRadius: 3,
+                boxShadow: 2,
+                height: '100%',
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant="subtitle2"
+                  color={theme.palette.primary.main}
+                  fontWeight={700}
+                  mb={1}
+                >
+                  Leakage by Type
+                </Typography>
+                <LeakByTypeChart />
+              </CardContent>
+            </Card>
+            {/* Consumption vs Leakage Chart */}
+            <Card
+              sx={{
+                bgcolor: theme.palette.background.default,
+                borderRadius: 3,
+                boxShadow: 2,
+                height: '100%',
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant="subtitle2"
+                  color={theme.palette.primary.main}
+                  fontWeight={700}
+                  mb={1}
+                >
+                  Consumption vs Leakage
+                </Typography>
+                <ConsumptionVsLeakageChart />
+              </CardContent>
+            </Card>
+            {/* Correlation: Leak Events vs Logger Readings */}
+            <Card
+              sx={{
+                bgcolor: theme.palette.background.default,
+                borderRadius: 3,
+                boxShadow: 2,
+                height: '100%',
+              }}
+            >
+              {' '}
+              <CardContent>
+                <Typography
+                  variant="subtitle2"
+                  color={theme.palette.primary.main}
+                  fontWeight={700}
+                  mb={1}
+                >
+                  Leak Events & Logger Readings Correlation
+                </Typography>
+                <LeakLoggerCorrelationChart />
+              </CardContent>
+            </Card>
+          </Box>
         </Grid>
         {/* Side Panel: Insights, Charts, and Quick Stats */}
         <Grid item xs={12} md={4} lg={3}>
@@ -178,7 +267,7 @@ const Dashboard: React.FC = () => {
         alignItems="stretch"
         sx={{ width: '100%', maxWidth: '100vw', mx: 'auto', mt: 2 }}
       >
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <NavigationCard
             icon={<VideocamIcon fontSize="large" />}
             title="Live Drone Feed"
@@ -186,12 +275,28 @@ const Dashboard: React.FC = () => {
             onClick={() => navigate('/live-drone-feed')}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <NavigationCard
             icon={<AnalyticsIcon fontSize="large" />}
             title="Analytics & Heatmaps"
             description="Explore trends and insights"
             onClick={() => navigate('/analytics')}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <NavigationCard
+            icon={<SettingsIcon fontSize="large" />}
+            title="Settings"
+            description="Configure dashboard preferences"
+            onClick={() => navigate('/settings')}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <NavigationCard
+            icon={<AnalyticsIcon fontSize="large" color="error" />}
+            title="Leak Heatmap"
+            description="Visualize leak distribution by zone"
+            onClick={() => navigate('/leak-heatmap')}
           />
         </Grid>
       </Grid>

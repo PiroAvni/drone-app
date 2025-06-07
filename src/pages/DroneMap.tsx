@@ -500,8 +500,8 @@ const DroneMap: React.FC<DroneMapProps> = ({
       />
       <Box
         sx={{
-          height: { xs: '60vh', sm: '70vh', md: '75vh', lg: '80vh' },
-          minHeight: 340,
+          height: { xs: '80vh', sm: '90vh', md: '95vh', lg: '98vh' }, // Increased height
+          minHeight: 500, // Increased minHeight
           borderRadius: 4,
           overflow: 'hidden',
           boxShadow: 8,
@@ -510,6 +510,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
         }}
       >
         <Map
+          style={{ width: '100vw', height: '100%' }} // Increased width to full viewport
           viewState={
             viewState as unknown as ViewState & {
               width: number;
@@ -520,7 +521,6 @@ const DroneMap: React.FC<DroneMapProps> = ({
             setViewState(e.viewState);
             setAutoCenterOnDrone(false); // Disable auto-center on user pan/zoom
           }}
-          style={{ width: '100%', height: '100%' }}
           mapStyle="mapbox://styles/mapbox/outdoors-v12"
           mapboxAccessToken={MAPBOX_TOKEN}
           interactiveLayerIds={['dma-region-outline', 'dma-region-fill']}
