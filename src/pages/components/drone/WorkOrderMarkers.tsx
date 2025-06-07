@@ -5,6 +5,7 @@ import type { WorkOrder } from '../../../models/workOrder';
 
 interface WorkOrderMarkersProps {
   workOrders: WorkOrder[];
+  showPopups?: boolean;
 }
 
 const WorkOrderMarkers: React.FC<WorkOrderMarkersProps> = React.memo(
@@ -63,7 +64,7 @@ const WorkOrderMarkers: React.FC<WorkOrderMarkersProps> = React.memo(
             >
               <Typography
                 fontWeight={700}
-                color='#fff'
+                color="#fff"
                 fontSize={13}
                 sx={{ textShadow: '0 1px 4px #23252688' }}
               >
@@ -71,7 +72,7 @@ const WorkOrderMarkers: React.FC<WorkOrderMarkersProps> = React.memo(
               </Typography>
             </Box>
             <Typography
-              variant='caption'
+              variant="caption"
               sx={{
                 bgcolor: '#fff',
                 color: wo.color,
@@ -90,7 +91,7 @@ const WorkOrderMarkers: React.FC<WorkOrderMarkersProps> = React.memo(
         </Marker>
       ))}
     </>
-  )
+  ),
 );
 
 export default WorkOrderMarkers;

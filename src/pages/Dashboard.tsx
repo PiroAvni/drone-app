@@ -23,20 +23,18 @@ import thermal5 from '../assets/images/thermal-5.jpeg';
 import DroneDetails from './components/DroneDetails';
 import AnalyticsChartsPanel from './components/AnalyticsChartsPanel';
 import NavigationCard from './components/NavigationCard';
-import DMAFilterBar from './components/DMAFilterBar';
-import dmaData from '../Mock/dmaData.json';
 
 const Dashboard: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [dma, setDMA] = React.useState('all');
-  const dmas = [
-    { id: 'all', name: 'All DMAs' },
-    ...dmaData.map((item: { dmaCode: string; dmaName?: string }) => ({
-      id: item.dmaCode,
-      name: item.dmaName || item.dmaCode,
-    })),
-  ];
+  const [dma, _] = React.useState('all');
+  // const dmas = [
+  //   { id: 'all', name: 'All DMAs' },
+  //   ...dmaData.map((item: { dmaCode: string; dmaName?: string }) => ({
+  //     id: item.dmaCode,
+  //     name: item.dmaName || item.dmaCode,
+  //   })),
+  // ];
   // Drone selection state
   const [selectedDroneId] = React.useState(mockDrones[0].id);
   const selectedDrone =
@@ -70,7 +68,7 @@ const Dashboard: React.FC = () => {
       {/* Latest Updates Ticker */}
       {/* <LatestUpdates /> */}
       <Typography
-        variant='h3'
+        variant="h3"
         fontWeight={800}
         color={theme.palette.primary.main}
         mb={2}
@@ -158,7 +156,7 @@ const Dashboard: React.FC = () => {
             >
               <CardContent>
                 <Typography
-                  variant='h6'
+                  variant="h6"
                   fontWeight={700}
                   color={theme.palette.primary.main}
                   mb={1}
@@ -176,23 +174,23 @@ const Dashboard: React.FC = () => {
       <Grid
         container
         spacing={4}
-        justifyContent='center'
-        alignItems='stretch'
+        justifyContent="center"
+        alignItems="stretch"
         sx={{ width: '100%', maxWidth: '100vw', mx: 'auto', mt: 2 }}
       >
         <Grid item xs={12} md={4}>
           <NavigationCard
-            icon={<VideocamIcon fontSize='large' />}
-            title='Live Drone Feed'
-            description='View real-time drone locations and video'
+            icon={<VideocamIcon fontSize="large" />}
+            title="Live Drone Feed"
+            description="View real-time drone locations and video"
             onClick={() => navigate('/live-drone-feed')}
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <NavigationCard
-            icon={<AnalyticsIcon fontSize='large' />}
-            title='Analytics & Heatmaps'
-            description='Explore trends and insights'
+            icon={<AnalyticsIcon fontSize="large" />}
+            title="Analytics & Heatmaps"
+            description="Explore trends and insights"
             onClick={() => navigate('/analytics')}
           />
         </Grid>
@@ -201,7 +199,7 @@ const Dashboard: React.FC = () => {
         mt={6}
         color={theme.palette.text.secondary}
         fontSize={16}
-        align='center'
+        align="center"
         maxWidth={700}
         component={motion.p}
         initial={{ opacity: 0, y: 20 }}

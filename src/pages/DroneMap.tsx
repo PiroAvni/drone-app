@@ -74,7 +74,7 @@ const dmaRegions = dmaData.map(
               Array.isArray(c) &&
               c.length === 2 &&
               typeof c[0] === 'number' &&
-              typeof c[1] === 'number'
+              typeof c[1] === 'number',
           )
         : [];
     return {
@@ -83,7 +83,7 @@ const dmaRegions = dmaData.map(
       bounds, // always [number, number][]
       geojson: geo,
     };
-  }
+  },
 );
 
 // Add DMA, tech staff, and popup support
@@ -102,14 +102,14 @@ const DroneMap: React.FC<DroneMapProps> = ({
   // const [selectedDroneId, setSelectedDroneId] = useState(mockDrones[0].id);
   const inflightDrones = mockDrones.filter((d) => d.status === 'active');
   const [selectedDroneId, setSelectedDroneId] = useState(
-    inflightDrones[0]?.id || ''
+    inflightDrones[0]?.id || '',
   );
   const selectedDrone =
     inflightDrones.find((d) => d.id === selectedDroneId) || inflightDrones[0];
 
   // State for all drones (not just first two)
   const [dronePositions, setDronePositions] = useState(
-    mockDrones.map((d) => d.position)
+    mockDrones.map((d) => d.position),
   );
   const [viewState, setViewState] = useState<ViewState>({
     longitude: mockDrones[0].position.lng,
@@ -121,7 +121,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
   });
   const [severity, setSeverity] = useState('all');
   const [dateRange, setDateRange] = useState<{ from: Dayjs; to: Dayjs }>(
-    () => ({ from: dayjs().subtract(14, 'day'), to: dayjs() })
+    () => ({ from: dayjs().subtract(14, 'day'), to: dayjs() }),
   );
   const [popup, setPopup] = useState<MapPopupType>(null);
   const [showMeters, setShowMeters] = useState(true);
@@ -162,7 +162,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
           lat: base.lat + (Math.random() - 0.5) * 0.01 * i,
         }));
       }),
-    []
+    [],
   );
 
   // Simulate both drones' movement
@@ -190,7 +190,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
             }));
           }
           return next;
-        })
+        }),
       );
     }, 2000);
     return () => clearInterval(interval);
@@ -202,35 +202,35 @@ const DroneMap: React.FC<DroneMapProps> = ({
       mockLeaksWithDMA.filter(
         (l) =>
           (dma === 'all' || l.dma === dma) &&
-          (severity === 'all' || l.severity === severity)
+          (severity === 'all' || l.severity === severity),
       ),
-    [dma, severity]
+    [dma, severity],
   );
   const filteredTechStaff = useMemo(
     () =>
       dma === 'all'
         ? mockTechStaff
         : mockTechStaff.filter((t) => t.dma === dma),
-    [dma]
+    [dma],
   );
   const filteredMeters = useMemo(
     () =>
       dma === 'all'
         ? mockSmartMeters
         : mockSmartMeters.filter((m) => m.dma === dma),
-    [dma]
+    [dma],
   );
   const filteredLoggers = useMemo(
     () =>
       dma === 'all' ? mockLoggers : mockLoggers.filter((l) => l.dma === dma),
-    [dma]
+    [dma],
   );
   const filteredWorkOrders = useMemo(
     () =>
       dma === 'all'
         ? mockWorkOrders
         : mockWorkOrders.filter((wo) => wo.dma === dma),
-    [dma]
+    [dma],
   );
 
   // Example: trigger a notification when a new drone is selected
@@ -281,7 +281,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
             <Typography fontWeight={700} color={color} fontSize={16}>
               {title}
             </Typography>
-            <Typography fontSize={14} color='text.secondary'>
+            <Typography fontSize={14} color="text.secondary">
               {message}
             </Typography>
           </Box>
@@ -296,7 +296,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
           },
           icon: false,
           closeButton: true,
-        }
+        },
       );
     };
     if (selectedDroneId) {
@@ -320,28 +320,28 @@ const DroneMap: React.FC<DroneMapProps> = ({
   >(null);
 
   // Helper to get bounds for a DMA region
-  function getDmaBounds(dmaId: string) {
-    const region = dmaRegions.find((d) => d.id === dmaId);
-    if (!region || !region.bounds.length) return null;
-    // region.bounds: number[][]
-    const boundsArr: [number, number][] = Array.isArray(region.bounds)
-      ? region.bounds.filter(
-          (c): c is [number, number] =>
-            Array.isArray(c) &&
-            c.length === 2 &&
-            typeof c[0] === 'number' &&
-            typeof c[1] === 'number'
-        )
-      : [];
-    const lats = boundsArr.map((c) => c[1]);
-    const lngs = boundsArr.map((c) => c[0]);
-    return [
-      Math.min(...lngs),
-      Math.min(...lats),
-      Math.max(...lngs),
-      Math.max(...lats),
-    ];
-  }
+  // function getDmaBounds(dmaId: string) {
+  //   const region = dmaRegions.find((d) => d.id === dmaId);
+  //   if (!region || !region.bounds.length) return null;
+  //   // region.bounds: number[][]
+  //   const boundsArr: [number, number][] = Array.isArray(region.bounds)
+  //     ? region.bounds.filter(
+  //         (c): c is [number, number] =>
+  //           Array.isArray(c) &&
+  //           c.length === 2 &&
+  //           typeof c[0] === 'number' &&
+  //           typeof c[1] === 'number'
+  //       )
+  //     : [];
+  //   const lats = boundsArr.map((c) => c[1]);
+  //   const lngs = boundsArr.map((c) => c[0]);
+  //   return [
+  //     Math.min(...lngs),
+  //     Math.min(...lats),
+  //     Math.max(...lngs),
+  //     Math.max(...lats),
+  //   ];
+  // }
 
   // Helper to get centroid for a DMA region
   function getDmaCentroid(dmaId: string): [number, number] | null {
@@ -354,7 +354,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
               Array.isArray(c) &&
               c.length === 2 &&
               typeof c[0] === 'number' &&
-              typeof c[1] === 'number'
+              typeof c[1] === 'number',
           )
         : []
     ) as [number, number][];
@@ -462,7 +462,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
           drones={inflightDrones}
           selectedDroneId={selectedDroneId}
           onChange={setSelectedDroneId}
-          label='Drone'
+          label="Drone"
           sx={{
             bgcolor: 'rgba(44,83,100,0.85)',
             borderRadius: 2,
@@ -521,7 +521,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
             setAutoCenterOnDrone(false); // Disable auto-center on user pan/zoom
           }}
           style={{ width: '100%', height: '100%' }}
-          mapStyle='mapbox://styles/mapbox/outdoors-v12'
+          mapStyle="mapbox://styles/mapbox/outdoors-v12"
           mapboxAccessToken={MAPBOX_TOKEN}
           interactiveLayerIds={['dma-region-outline', 'dma-region-fill']}
           onClick={(e) => {
@@ -557,8 +557,8 @@ const DroneMap: React.FC<DroneMapProps> = ({
         >
           {/* DMA Regions Layer: outlines all DMAs, highlights selected */}
           <Source
-            id='dma-regions'
-            type='geojson'
+            id="dma-regions"
+            type="geojson"
             data={{
               type: 'FeatureCollection',
               features: dmaRegions
@@ -575,8 +575,8 @@ const DroneMap: React.FC<DroneMapProps> = ({
           >
             {/* Fill for all DMAs, highlight selected */}
             <Layer
-              id='dma-region-fill'
-              type='fill'
+              id="dma-region-fill"
+              type="fill"
               paint={{
                 'fill-color': [
                   'case',
@@ -594,8 +594,8 @@ const DroneMap: React.FC<DroneMapProps> = ({
             />
             {/* Outline for all DMAs, highlight selected */}
             <Layer
-              id='dma-region-outline'
-              type='line'
+              id="dma-region-outline"
+              type="line"
               paint={{
                 'line-color': [
                   'case',
@@ -612,7 +612,7 @@ const DroneMap: React.FC<DroneMapProps> = ({
             <Popup
               longitude={hoveredDMACoord[0]}
               latitude={hoveredDMACoord[1]}
-              anchor='top'
+              anchor="top"
               closeButton={false}
               closeOnClick={false}
               offset={16}
@@ -667,7 +667,6 @@ const DroneMap: React.FC<DroneMapProps> = ({
             <WorkOrderMarkers
               workOrders={filteredWorkOrders}
               showPopups={showPopups}
-              setPopup={setPopup}
             />
           )}
           <DronePathLines
@@ -680,11 +679,11 @@ const DroneMap: React.FC<DroneMapProps> = ({
             <Popup
               longitude={popup.lng}
               latitude={popup.lat}
-              anchor='top'
+              anchor="top"
               onClose={() => setPopup(null)}
               closeButton
               closeOnClick={false}
-              maxWidth='260px'
+              maxWidth="260px"
             >
               <MapPopup popup={popup} theme={theme} />
             </Popup>
