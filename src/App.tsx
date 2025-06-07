@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useMemo, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Container } from '@mui/material';
@@ -141,7 +141,7 @@ function App() {
   };
   const markAsRead = (id: number) => {
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
     );
   };
 
@@ -166,11 +166,11 @@ function App() {
           theme={theme}
         />
         <DashboardLayout>
-          <Container maxWidth='xl' sx={{ flex: 1, py: 3 }}>
+          <Container maxWidth="xl" sx={{ flex: 1, py: 3 }}>
             <Routes>
               {appRoutes}
               <Route
-                path='/settings'
+                path="/settings"
                 element={
                   <Settings themeMode={themeMode} setThemeMode={setThemeMode} />
                 }
@@ -179,7 +179,7 @@ function App() {
           </Container>
         </DashboardLayout>
         <ToastContainer
-          position='top-right'
+          position="top-right"
           autoClose={4000}
           hideProgressBar={false}
           newestOnTop
@@ -188,7 +188,7 @@ function App() {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme='colored'
+          theme="colored"
           style={{ zIndex: 14000 }}
         />
       </Router>
